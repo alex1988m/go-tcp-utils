@@ -1,2 +1,2 @@
-target: google.com:80
+target: localhost:5555
 proxy: localhost:4444
