@@ -39,4 +39,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringP("target", "t", "localhost:5555", "target host:port")
 	viper.BindPFlag("target", rootCmd.PersistentFlags().Lookup("target"))
+	rootCmd.PersistentFlags().StringP("proxy", "p", "localhost:4444", "proxy host:port")
+	viper.BindPFlag("proxy", rootCmd.PersistentFlags().Lookup("proxy"))
 }

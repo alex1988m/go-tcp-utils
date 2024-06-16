@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github/alex1988m/go-tcp-utils/handler"
 	"github/alex1988m/go-tcp-utils/server"
 	"log"
 
@@ -17,10 +18,10 @@ var proxyCmd = &cobra.Command{
 		targetAddr := viper.GetString("target")
 
 		log.Printf("proxy addr: %s, target addr: %s", proxyAddr, targetAddr)
-
-		proxy := &server.ProxyServer{
-			ProxyAddr:  proxyAddr,
-			TargetAddr: targetAddr,
+		var handler handler.TCPHandler = &handler.TCPProxyHandler{TargetAddr: targetAddr}
+		proxy := &server.TCPServer{
+			ServerAddr: proxyAddr,
+			Handler:    handler,
 		}
 
 		if err := proxy.Start(); err != nil {
@@ -35,9 +36,5 @@ var proxyCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(proxyCmd)
-
-	proxyCmd.PersistentFlags().StringP("proxy", "p", "localhost:4444", "proxy host:port")
-
-	viper.BindPFlag("proxy", proxyCmd.PersistentFlags().Lookup("proxy"))
+	serverCmd.AddCommand(proxyCmd)
 }
